@@ -23,7 +23,7 @@ app.use("/product", productRoutes);
 
 // rota inicial / endpoint
 app.get("/", (req, res) => {
-    res.json({ message: "OK" });
+    res.json({ message: "Running" });
 });
 
 // entregar porta
