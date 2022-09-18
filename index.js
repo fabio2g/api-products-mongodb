@@ -5,8 +5,8 @@ require("dotenv").config();
 const app = express();
 
 // criar .env
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_USER = "fabio";
+const DB_PASSWORD = "r!yYmwC6VBfNd8b";
 const URL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.vbcw7.mongodb.net/databaseapi?retryWrites=true&w=majority`;
 
 //forma de ler json
