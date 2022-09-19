@@ -17,6 +17,14 @@ app.use(
 );
 app.use(express.json());
 
+app.use((req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Header",
+        "Origin, X-Request-With, Content-Type, Accept, Authorization"
+    );
+});
+
 // rotas da API
 const productRoutes = require("./routes/productRoutes");
 app.use("/product", productRoutes);
