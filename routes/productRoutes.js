@@ -3,10 +3,14 @@ const Product = require("../models/Product");
 
 // Criação de Produtos
 router.post("/", async (req, res) => {
-    const { name, price, image } = req.body;
+    const { name, description, price, image, category } = req.body;
 
     if (!name) {
         res.status(422).json({ error: "Name is required" });
+        return;
+    }
+    if (!description) {
+        res.status(422).json({ error: "Description is required" });
         return;
     }
     if (!price) {
@@ -17,16 +21,22 @@ router.post("/", async (req, res) => {
         res.status(422).json({ error: "Image is required" });
         return;
     }
+    if (!category) {
+        res.status(422).json({ error: "Category is required" });
+        return;
+    }
 
     const product = {
         name,
+        description,
         price,
         image,
+        category,
     };
 
     try {
         await Product.create(product);
-        res.status(201).json({ message: "Success" });
+        res.status(201).json({ message: "Successfully created!" });
     } catch (error) {
         res.status(500).json({ error: error });
     }
@@ -42,6 +52,7 @@ router.get("/", async (req, res) => {
     }
 });
 
+// Leitura de Produtos por ID
 router.get("/:id", async (req, res) => {
     const id = req.params.id;
 
@@ -49,7 +60,7 @@ router.get("/:id", async (req, res) => {
         const product = await Product.findById({ _id: id });
 
         if (!product) {
-            res.status(422).json({ message: "ID Invalid" });
+            res.status(422).json({ message: "Id Invalid!" });
             return;
         }
 
@@ -65,21 +76,32 @@ router.patch("/:id", async (req, res) => {
     const { name, price, image } = req.body;
 
     if (!name) {
-        res.status(422).json({ message: "Name is required" });
+        res.status(422).json({ error: "Name is required" });
+        return;
+    }
+    if (!description) {
+        res.status(422).json({ error: "Description is required" });
         return;
     }
     if (!price) {
-        res.status(422).json({ message: "Price is required" });
+        res.status(422).json({ error: "Price is required" });
         return;
     }
     if (!image) {
-        res.status(422).json({ message: "Image is required" });
+        res.status(422).json({ error: "Image is required" });
+        return;
+    }
+    if (!category) {
+        res.status(422).json({ error: "Category is required" });
+        return;
     }
 
     const product = {
         name,
+        description,
         price,
         image,
+        category,
     };
 
     try {
@@ -89,7 +111,7 @@ router.patch("/:id", async (req, res) => {
         );
 
         if (!updateProduct) {
-            res.status(422).json({ message: "ID Invalid" });
+            res.status(422).json({ message: "Id Invalid!" });
             return;
         }
 
@@ -103,13 +125,13 @@ router.delete("/:id", async (req, res) => {
     const product = await Product.findById({ _id: id });
 
     if (!product) {
-        res.status(422).json({ message: "ID Invalid" });
+        res.status(422).json({ message: "Id Invalid!" });
         return;
     }
 
     try {
         await Product.deleteOne({ _id: id });
-        res.status(200).json({ message: "Success" });
+        res.status(200).json({ message: "Successfully deleted!" });
     } catch (error) {
         res.status(500).json({ error: error });
     }
