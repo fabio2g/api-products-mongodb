@@ -3,7 +3,7 @@ const Product = require("../models/Product");
 
 // Criação de Produtos
 router.post("/", async (req, res) => {
-    const { name, description, price, image, category } = req.body;
+    const { name, description, brand, price, image, category } = req.body;
 
     if (!name) {
         res.status(422).json({ error: "Name is required" });
@@ -11,6 +11,10 @@ router.post("/", async (req, res) => {
     }
     if (!description) {
         res.status(422).json({ error: "Description is required" });
+        return;
+    }
+    if (!brand) {
+        res.status(422).json({ error: "Brand is required" });
         return;
     }
     if (!price) {
@@ -29,6 +33,7 @@ router.post("/", async (req, res) => {
     const product = {
         name,
         description,
+        brand,
         price,
         image,
         category,
@@ -83,6 +88,10 @@ router.patch("/:id", async (req, res) => {
         res.status(422).json({ error: "Description is required" });
         return;
     }
+    if (!brand) {
+        res.status(422).json({ error: "Brand is required" });
+        return;
+    }
     if (!price) {
         res.status(422).json({ error: "Price is required" });
         return;
@@ -99,6 +108,7 @@ router.patch("/:id", async (req, res) => {
     const product = {
         name,
         description,
+        brand,
         price,
         image,
         category,
